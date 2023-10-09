@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1> Petty pets Agency - All Pets</h1>
+
+  {% if pets %}
+    <div class="row pets-listing container">
+      {% for pet in pets %}
+        <div class="col-3">
+          <h2>{{ pet.name }}</h2>
+          {% if pet.photo_url %}
+            <div class="imgbox">
+              <img class="img-thumbnail" src="{{ pet.stock_or_image_url() }}" alt="{{ pet.name }}">
+              <a href="{{ url_for('edit_pet', pet_id=pet.id) }}">Edit {{ pet.name }}</a>
+            </div>
+          {% endif %}
+          {% if pet.available %}
+            <small><b> is available!</b></small>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="col-12">No pets yet.</div>
+  {% endif %}
+
+  <a class="btn btn-primary" href="{{ url_for('add_pet') }}">Add a Pet</a>
+{% endblock %}
